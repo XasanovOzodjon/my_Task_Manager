@@ -1,0 +1,16 @@
+[
+    {
+        "id": "1dcf8e58-64bc-11f0-a25f-a6fe32a704d9",
+        "name": "Ozodjon",
+        "username": "egoo",
+        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "admin": false
+    },
+    {
+        "id": "5fe3b2ce-64bc-11f0-a25f-a6fe32a704d9",
+        "name": "Aliii",
+        "username": "iziiii",
+        "password": "154c4c511cbb166a317c247a839e46cac6d9208af5b015e1867a84cd9a56007b",
+        "admin": false
+    }
+]
