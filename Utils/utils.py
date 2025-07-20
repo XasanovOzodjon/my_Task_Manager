@@ -1,14 +1,15 @@
-from os import system as clr
+
 from hashlib import sha256
-def print_main_menu():
+import os
+
+def clr(aa = "clear") -> None:
+    os.system("cls" if os.name == "nt" else aa)
+
+def print_main_menu() -> None:
     print("___________ Main Menu ___________")
     print("1. Login")
     print("2. Register")
     print("3. Exit")
-def print_task_menu():
-    print("___________ Task Menu ___________")
-    print("1. Create Tasks")
-    print("2. Logout")
     
     
 def cheak_name(name: str) -> bool:
@@ -52,31 +53,54 @@ def cheak_username(username: str, users: list) -> bool:
 def cheak_password(password, confom) -> bool:
     if password != confom:
         clr("clear")
-        print("Password va confirm password bir xil emas")
+        print("Password va confirm password bir xil emas\n")
         return False
     if len(password) < 8:
         clr("clear")
-        print("Parol kamida 8 ta belgidan iborat bulsin")
+        print("Parol kamida 8 ta belgidan iborat bulsin\n")
+        return False
     if len(password) > 32:
         clr("clear")
-        print("Parolingiz juda uzun")
+        print("Parolingiz juda uzun\n")
+        return False
         
     return True
 
-def cheak_admin(username:str):
+def cheak_admin(username:str) -> list:
     if username.startswith("admin::08="):
         username.replace("admin::08=", "")
         return [username.replace("admin::08=", ""), True]
 
     return [username, False]
 
+def search_user(username: str, users: list):
+    min_s = 0
+    max_s = len(users) - 1
 
+    while min_s <= max_s:
+        curent_s = (min_s + max_s) // 2
+        current_username = users[curent_s].username
 
-def make_pas(password):
+        if username == current_username:
+            print("Foydalanuvchi topildi")
+            return users[curent_s]
+        elif username < current_username:
+            max_s = curent_s - 1
+        else:
+            min_s = curent_s + 1
+
+    print("Topilmadi")
+    return -1
+
+    
+    
+    
+
+def make_pas(password: str) -> str:
     return sha256(password.encode()).hexdigest()
 
 
-def cheak_title(title: str, tasks: list):
+def cheak_title(title: str, tasks: list) -> bool:
     if title in [user.title for user in tasks]:
         clr("clear")
         print("Bu foydalanuvchi nomi allaqachon mavjud.\n")

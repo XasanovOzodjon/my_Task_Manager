@@ -1,16 +1,16 @@
 [
     {
-        "id": "1dcf8e58-64bc-11f0-a25f-a6fe32a704d9",
-        "name": "Ozodjon",
-        "username": "egoo",
-        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "id": "83a3c5ae-6558-11f0-a5bb-a6fe32a704d9",
+        "name": "Ali",
+        "username": "ali1",
+        "password": "1718c24b10aeb8099e3fc44960ab6949ab76a267352459f203ea1036bec382c2",
         "admin": false
     },
     {
-        "id": "5fe3b2ce-64bc-11f0-a25f-a6fe32a704d9",
-        "name": "Aliii",
-        "username": "iziiii",
-        "password": "154c4c511cbb166a317c247a839e46cac6d9208af5b015e1867a84cd9a56007b",
+        "id": "f31b595c-6552-11f0-af55-a6fe32a704d9",
+        "name": "Ozodjon",
+        "username": "egoo",
+        "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
         "admin": false
     }
 ]

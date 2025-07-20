@@ -1,9 +1,13 @@
 from Utils import print_main_menu, print_task_menu
 from Manager import Task_manager
-from os import system as clr
+import os
+
+def clr(aa = "clear"):
+    os.system("cls" if os.name == "nt" else aa)
 
 
 def login_or_register() -> None:
+    clr("clear")
     manager = Task_manager()
     while True:
         print_main_menu()
@@ -11,7 +15,7 @@ def login_or_register() -> None:
         
         if choice == '1':
             if manager.Login():
-                Task_menu(manager)  # ✅ manager uzatildi
+                Task_menu(manager)
         elif choice == '2':
             manager.Register()
         elif choice == '3':
@@ -20,7 +24,7 @@ def login_or_register() -> None:
             clr("clear")        
 
 
-def Task_menu(manager: Task_manager) -> None:  # ✅ manager qabul qiladi
+def Task_menu(manager: Task_manager) -> None:
     manager.load_tasks()
     while True:
         print_task_menu()
