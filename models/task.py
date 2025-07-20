@@ -20,6 +20,5 @@ class Task:
     
     @classmethod
     def Task_from_dict(cls, data: dict):
-        temp_user = cls(data["title"], data["description"], data["user_id"])
-        temp_user.user_id = data["user_id"]
+        temp_user = cls(data["title"], data["description"], data["deadline"], data["user_id"])
         return temp_user

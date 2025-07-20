@@ -109,6 +109,8 @@ class User_manager:
     def get_id(self):
         return self.current_user.id
 
+    def Logout(self):
+        self.current_user = None
 
 
 
@@ -118,7 +120,42 @@ class Task_manager(User_manager):
         super().__init__()
         self.tasks = []
 
+    def show_task(self):
+        clr()
+        self.retry()
+        print("___________ My Tasks ___________")
+        if len(self.tasks) != 0:
+            for task in range(len(self.tasks)):
+                print(f"{task+1}. {self.tasks[task].title[0][0]}")
+        else:
+            print("Sizda Tasklar mavjud emas!\n")
+        print(f"{len(self.tasks)+1}. Exit")
+        try:
+            choise = int(input(">"))
+        except:
+            clr()
+            print("Siz taskni tanlamadingiz. Raqam kiritingingiz shart")
+            return
+        try:
+            if choise != len(self.tasks)+1:
+                clr()
+                print(f"___________ {self.tasks[choise-1].title[0][0]} ___________\n")
+                print(f"Description: {self.tasks[choise-1].description[0][0]}\n")
+                print(f"Created_at: {self.tasks[choise-1].created_at}\n")
+                print(f"deadline: {self.tasks[choise-1].deadline}\n")
+                input()
+                clr()
+            else:
+                clr()
+                return
+        except:
+            print("Siz notug'ri tanlov qildingiz!")
+            return
+        
+        
     def create_task(self):
+        self.retry()
+        clr()
         title = input("Task Title: ")
         if not cheak_title(title, self.tasks):
             return
@@ -144,6 +181,7 @@ class Task_manager(User_manager):
         new_task = Task(title, description, deadline, self.get_id())
         self.tasks.append(new_task)
         self.save_tasks()
+        self.retry()
 
     def load_tasks(self):
         username = self.get_username()
@@ -161,8 +199,10 @@ class Task_manager(User_manager):
                 for task_data in data:
                     task = Task.Task_from_dict(task_data)
                     list_tasks.append(task)
-                self.tasks = list_tasks
                 return list_tasks
+            
+    def retry(self):
+        self.tasks = self.load_tasks()
 
     def save_tasks(self):
         path = f"DataBase/{self.current_user.username}_tasks.json"

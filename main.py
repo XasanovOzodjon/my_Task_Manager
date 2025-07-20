@@ -31,10 +31,14 @@ def Task_menu(manager: Task_manager) -> None:
         choice = input()
         
         if choice == '1':
-            manager.create_task()
+            manager.show_task()
         elif choice == '2':
+            manager.create_task()
+        elif choice == '3':
+            manager.Logout()
             return
         else:
+            print("Xato Buyruq!")
             clr("clear")  
 
 

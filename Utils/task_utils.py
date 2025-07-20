@@ -5,5 +5,7 @@ def clr(aa):
 
 def print_task_menu():
     print("___________ Task Menu ___________")
-    print("1. Create Tasks")
-    print("2. Logout")
+    print("1. Show Tasks")
+    print("2. Create Tasks")
+    print("3. Logout")
+    
