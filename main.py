@@ -39,7 +39,7 @@ def Task_menu(manager: Task_manager) -> None:
             Edit_menu(manager)
         elif choice == '4':
             manager.Logout()
-            return
+            login_or_register()
         else:
             print("Xato Buyruq!")
             clr("clear")
