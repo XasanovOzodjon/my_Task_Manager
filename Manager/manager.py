@@ -125,32 +125,41 @@ class Task_manager(User_manager):
         self.retry()
         print("___________ My Tasks ___________")
         if len(self.tasks) != 0:
-            for task in range(len(self.tasks)):
-                print(f"{task+1}. {self.tasks[task].title[0][0]}")
+            for i, task in enumerate(self.tasks):
+                print(f"{i+1}. {task.title}")
         else:
             print("Sizda Tasklar mavjud emas!\n")
         print(f"{len(self.tasks)+1}. Exit")
+
         try:
-            choise = int(input(">"))
-        except:
+            choise = int(input("> "))
+        except ValueError:
             clr()
-            print("Siz taskni tanlamadingiz. Raqam kiritingingiz shart")
+            print("Xatolik: Raqam kiriting")
             return
-        try:
-            if choise != len(self.tasks)+1:
-                clr()
-                print(f"___________ {self.tasks[choise-1].title[0][0]} ___________\n")
-                print(f"Description: {self.tasks[choise-1].description[0][0]}\n")
-                print(f"Created_at: {self.tasks[choise-1].created_at}\n")
-                print(f"deadline: {self.tasks[choise-1].deadline}\n")
-                input()
-                clr()
-            else:
-                clr()
-                return
-        except:
-            print("Siz notug'ri tanlov qildingiz!")
+
+        if choise == len(self.tasks) + 1:
+            clr()
             return
+
+        if 1 <= choise <= len(self.tasks):
+            clr()
+            task = self.tasks[choise - 1]
+            print(f"___________ {task.title} ___________")
+            print(f"Description: {task.description}")
+            print(f"Created_at: {task.created_at}")
+            print(f"Deadline: {task.deadline}")
+            print(f"Satatus: {"Bajarilgan" if task.status else "Bajarilmagan"}")
+            
+            print(f"\n1 - Bajarilgan qilish!")
+            ch = input("[Enter] — ortga qaytish\n>>")
+            if ch == "1":
+                self.tasks[choise - 1].status = True
+                self.save_tasks()
+                self.retry()
+            clr()
+        else:
+            print("Siz noto‘g‘ri tanlov kiritdingiz!")
         
         
     def create_task(self):
@@ -162,20 +171,17 @@ class Task_manager(User_manager):
         description = input("Task Description: ")
 
         while True:
-            deadline = input("Task Deadline: ")
-            
+            deadline = input("Task Deadline (dd-mm-yyyy): ")
             try:
                 sana = datetime.strptime(deadline, "%d-%m-%Y")
                 hozirgi_vaqt = datetime.now()
-                
                 if sana <= hozirgi_vaqt:
-                    os.system("clear")
+                    clr()
                     print("Xatolik: Sana hozirgi vaqtdan katta bo‘lishi kerak!")
                 else:
                     break
-                    
             except ValueError:
-                os.system("clear")
+                clr()
                 print("Xatolik:(To‘g‘ri format: dd-mm-yyyy)")
 
         new_task = Task(title, description, deadline, self.get_id())
@@ -183,29 +189,169 @@ class Task_manager(User_manager):
         self.save_tasks()
         self.retry()
 
+    def delete_task(self):
+        clr()
+        self.retry()
+        print("___________ My Tasks ___________")
+        if len(self.tasks) != 0:
+            for i, task in enumerate(self.tasks):
+                print(f"{i+1}. {task.title}")
+        else:
+            print("Sizda Tasklar mavjud emas!\n")
+        print(f"{len(self.tasks)+1}. Exit")
+
+        try:
+            choise = int(input("> "))
+        except ValueError:
+            clr()
+            print("Xatolik: Raqam kiriting")
+            return
+
+        if choise == len(self.tasks) + 1:
+            clr()
+            return
+
+        if 1 <= choise <= len(self.tasks):
+            clr()
+            dell = self.tasks.pop(choise - 1)
+            print(f"{dell.title} Task o'chirildi.")
+            self.save_tasks()
+            self.retry
+        else:
+            print("Siz noto‘g‘ri tanlov kiritdingiz!")
+    
+    def edit_title(self):
+        clr()
+        self.retry()
+        print("___________ My Tasks ___________")
+        if len(self.tasks) != 0:
+            for i, task in enumerate(self.tasks):
+                print(f"{i+1}. {task.title}")
+        else:
+            print("Sizda Tasklar mavjud emas!\n")
+        print(f"{len(self.tasks)+1}. Exit")
+
+        try:
+            choise = int(input("> "))
+        except ValueError:
+            clr()
+            print("Xatolik: Raqam kiriting")
+            return
+
+        if choise == len(self.tasks) + 1:
+            clr()
+            return
+
+        if 1 <= choise <= len(self.tasks):
+            clr()
+            title = input("New Task Title: ")
+            self.tasks[choise - 1].title = title
+            print(f"Task nomi {title} ga o'zgartirildi")
+            self.save_tasks()
+            self.retry
+        else:
+            print("Siz noto‘g‘ri tanlov kiritdingiz!")
+    
+    def edit_discraption(self):
+        clr()
+        self.retry()
+        print("___________ My Tasks ___________")
+        if len(self.tasks) != 0:
+            for i, task in enumerate(self.tasks):
+                print(f"{i+1}. {task.title}")
+        else:
+            print("Sizda Tasklar mavjud emas!\n")
+        print(f"{len(self.tasks)+1}. Exit")
+
+        try:
+            choise = int(input("> "))
+        except ValueError:
+            clr()
+            print("Xatolik: Raqam kiriting")
+            return
+
+        if choise == len(self.tasks) + 1:
+            clr()
+            return
+
+        if 1 <= choise <= len(self.tasks):
+            clr()
+            description = input("New Task Description: ")
+            self.tasks[choise - 1].description = description
+            print(f"Task descriptioni: {description} ga o'zgartirildi")
+            self.save_tasks()
+            self.retry
+        else:
+            print("Siz noto‘g‘ri tanlov kiritdingiz!")
+            
+    
+    def edit_deatline(self):
+        clr()
+        self.retry()
+        print("___________ My Tasks ___________")
+        if len(self.tasks) != 0:
+            for i, task in enumerate(self.tasks):
+                print(f"{i+1}. {task.title}")
+        else:
+            print("Sizda Tasklar mavjud emas!\n")
+        print(f"{len(self.tasks)+1}. Exit")
+
+        try:
+            choise = int(input("> "))
+        except ValueError:
+            clr()
+            print("Xatolik: Raqam kiriting")
+            return
+
+        if choise == len(self.tasks) + 1:
+            clr()
+            return
+
+        if 1 <= choise <= len(self.tasks):
+            clr()
+            while True:
+                deadline = input("Task Deadline (dd-mm-yyyy): ")
+                try:
+                    sana = datetime.strptime(deadline, "%d-%m-%Y")
+                    hozirgi_vaqt = datetime.now()
+                    if sana <= hozirgi_vaqt:
+                        clr()
+                        print("Xatolik: Sana hozirgi vaqtdan katta bo‘lishi kerak!")
+                    else:
+                        break
+                except ValueError:
+                    clr()
+                    print("Xatolik:(To‘g‘ri format: dd-mm-yyyy)")
+            self.tasks[choise - 1].deadline = deadline
+            print(f"Task deatlinesi: {deadline} ga o'zgartirildi")
+            self.save_tasks()
+            self.retry
+        else:
+            print("Siz noto‘g‘ri tanlov kiritdingiz!")
+    
     def load_tasks(self):
         username = self.get_username()
         path = f"DataBase/{username}_tasks.json"
         if not os.path.exists(path):
             return []
-
         with open(path, "r") as file:
             try:
                 data = json.load(file)
-                list_tasks = []
-            except:
+            except json.JSONDecodeError:
                 return []
             else:
+                list_tasks = []
                 for task_data in data:
-                    task = Task.Task_from_dict(task_data)
+                    task = Task.from_dict(task_data)
                     list_tasks.append(task)
                 return list_tasks
+        path = f"DataBase/{username}_tasks.json"
             
     def retry(self):
         self.tasks = self.load_tasks()
 
     def save_tasks(self):
         path = f"DataBase/{self.current_user.username}_tasks.json"
+        data = [task.to_dict() for task in self.tasks]
         with open(path, "w") as file:
-            data = [task.Task_to_dict() for task in self.tasks]
             json.dump(data, file, indent=4)

@@ -1,4 +1,4 @@
-from Utils import print_main_menu, print_task_menu
+from Utils import print_main_menu, print_task_menu, print_task_edit_menu
 from Manager import Task_manager
 import os
 
@@ -25,6 +25,7 @@ def login_or_register() -> None:
 
 
 def Task_menu(manager: Task_manager) -> None:
+    clr()
     manager.load_tasks()
     while True:
         print_task_menu()
@@ -35,11 +36,35 @@ def Task_menu(manager: Task_manager) -> None:
         elif choice == '2':
             manager.create_task()
         elif choice == '3':
+            Edit_menu(manager)
+        elif choice == '4':
             manager.Logout()
             return
         else:
             print("Xato Buyruq!")
-            clr("clear")  
+            clr("clear")
+            
+def Edit_menu(manager: Task_manager) -> None:
+    clr()
+    manager.load_tasks()
+    while True:
+        print_task_edit_menu()
+        choice = input()
+        
+        if choice == '1':
+            manager.edit_title()
+        elif choice == '2':
+            manager.edit_discraption()
+        elif choice == '3':
+            manager.edit_deatline()
+        elif choice == '4':
+            manager.delete_task()
+        elif choice == '5':
+            Task_menu(manager)
+            return
+        else:
+            print("Xato Buyruq!")
+            clr("clear")
 
 
 if __name__ == "__main__":
